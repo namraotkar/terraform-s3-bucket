@@ -1,8 +1,3 @@
-tring
-  default = "us-east-2"
-}
-
-variable "bucket_name" {
-  type        = string
-  description = "Nikhil Armaotkar"
+output "bucket_name" {
+  value = aws_s3_bucket.example.bucket
 }
