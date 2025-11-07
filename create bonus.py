@@ -1,10 +1,10 @@
-# bonus.py
-# Prints your name multiple times
+name = "Nikhil Amraotkar"
 
-def print_name(name, times):
-    for i in range(times):
-        print(name)
+# Print the name 10 times
+for _ in range(10):
+    print(name)
 
-if __name__ == "__main__":
-    # Change times if you want more repetitions
-    print_name("Nikhil Amraotkar", 10)
+# Write the name 10 times to a file named output.txt
+with open("output.txt", "w") as file:
+    for _ in range(10):
+        file.write(name + "\n")
