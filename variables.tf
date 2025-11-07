@@ -1,8 +1,9 @@
-tring
+variable "region" {
+  type    = string
   default = "us-east-2"
 }
 
 variable "bucket_name" {
   type        = string
-  description = "Nikhil Amraotkar"
+  description = "Nihkil Amraotkar"
 }
