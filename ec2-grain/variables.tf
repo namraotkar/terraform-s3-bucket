@@ -1,12 +1,9 @@
 variable "region" {
-  default = "us-east-1"
+  type    = string
+  default = "us-east-2"
 }
 
-variable "ami_id" {
-  description = "AMI ID for EC2"
+variable "bucket_name" {
   type        = string
-}
-
-variable "instance_type" {
-  default = "t2.micro"
+  description = "Quali"
 }
