@@ -1,3 +1,5 @@
-output "bucket_name" {
-  value = aws_s3_bucket.example.bucket
+
+output "created_by" {
+  description = "Name"
+  value       = "Nikhil Amraotkar"
 }
