@@ -1,4 +1,4 @@
-output "created_by" {
+output "static_message" {
   description = "Name"
   value       = "Nikhil Amraotkar"
 }
