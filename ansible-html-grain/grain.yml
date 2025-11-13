@@ -1,0 +1,14 @@
+name: ansible_html_generator
+version: 1.0
+type: ansible
+inputs:
+  bucket_name:
+    type: string
+    description: "S3 bucket name from terraform grain"
+  torque_output:
+    type: string
+    description: "Output from Torque grain"
+outputs:
+  html_file:
+    type: string
+    description: "Path to generated HTML file"
