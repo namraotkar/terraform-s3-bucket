@@ -1,5 +1,10 @@
 - hosts: localhost
   tasks:
+    - name: Create HTML file
+      copy:
+        dest: /tmp/index.html
+        content: "<html><body><h1>Hello from Torque!</h1></body></html>"
+
     - name: Upload HTML file to S3
       aws_s3:
         bucket: "{{ s3_bucket_name }}"
@@ -7,3 +12,7 @@
         src: "/tmp/index.html"
         mode: put
         region: "{{ aws_region }}"
+
+    - name: Output S3 URL
+      debug:
+        msg: "https://{{ s3_bucket_name }}.s3.{{ aws_region }}.amazonaws.com/index.html"
