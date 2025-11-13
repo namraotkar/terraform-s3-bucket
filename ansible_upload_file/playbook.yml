@@ -1,17 +1,18 @@
-kind: Grain
-version: 1.0
-metadata:
-  name: ansible_upload_file
-  description: "Ansible grain to create and upload HTML file to S3"
-spec:
-  type: ansible
-  playbook: playbook.yml
-  inputs:
-    - name: s3_bucket_name
-      type: string
-    - name: aws_region
-      type: string
-  outputs:
-    - name: html_file_url
-      type: string
-      value: "https://{{ s3_bucket_name }}.s3.{{ aws_region }}.amazonaws.com/index.html"
+- hosts: localhost
+  tasks:
+    - name: Create HTML file
+      copy:
+        dest: /tmp/index.html
+        content: "<html><body><h1>Hello from Torque!</h1></body></html>"
+
+    - name: Upload HTML file to S3
+      aws_s3:
+        bucket: "my-fixed-bucket-name"
+        object: "index.html"
+        src: "/tmp/index.html"
+        mode: put
+        region: "us-east-1"
+
+    - name: Output S3 URL
+      debug:
+        msg: "https://my-fixed-bucket-name.s3.us-east-1.amazonaws.com/index.html"
