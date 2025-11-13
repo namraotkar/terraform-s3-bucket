@@ -1,0 +1,9 @@
+- hosts: localhost
+  tasks:
+    - name: Upload HTML file to S3
+      aws_s3:
+        bucket: "{{ s3_bucket_name }}"
+        object: "index.html"
+        src: "/tmp/index.html"
+        mode: put
+        region: "{{ aws_region }}"
