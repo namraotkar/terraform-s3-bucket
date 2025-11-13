@@ -1,9 +1,13 @@
-
-name: shell_create_html
-type: shell
-script: script.sh
-inputs: []
-outputs:
-  - name: html_file_path
-    type: string
-
+kind: Grain
+version: 1.0
+metadata:
+  name: shell_create_html
+  description: "Shell grain to create HTML file"
+spec:
+  type: shell
+  script: script.sh
+  inputs: []
+  outputs:
+    - name: html_file_path
+      type: string
+      value: "/tmp/index.html"
