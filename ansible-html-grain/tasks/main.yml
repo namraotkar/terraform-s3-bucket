@@ -1,0 +1,15 @@
+- name: Create HTML file with URLs
+  copy:
+    dest: "/tmp/output.html"
+    content: |
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Grain Outputs</title>
+      </head>
+      <body>
+        <h1>Generated Links</h1>
+        <p>S3 Bucket: https://{{ bucket_name }}.s3.amazonaws.com{{ bucket_name }}</a></p>
+        <p>Torque Output: <a href="{{ torque}{{ torque_output }}</a></p>
+      </body>
+      </html>
