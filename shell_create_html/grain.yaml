@@ -1,7 +1,9 @@
+
 name: shell_create_html
 type: shell
 script: script.sh
 inputs: []
 outputs:
   - name: html_file_path
-    value: "/tmp/index.html
+    type: string
+
