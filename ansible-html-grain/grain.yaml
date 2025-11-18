@@ -1,19 +1,26 @@
-name: ansible_html_generator
-kind: grain
-description: "Generate an HTML file with S3 bucket and Torque outputs, then copy it to repo folder"
-inputs:
-  bucket_name:
-    type: string
-    description: "Name of the S3 bucket"
-  torque_output:
-    type: string
-    description: "Torque output URL or text"
-outputs:
-  html_file:
-    type: string
-    description: "Path to the generated HTML file"
-    value: "/home/root/tmp-storage/acc2899/workspace/repository/terraform-s3-bucket/finaloutput/index.html"
-steps:
-  - name: Run Playbook
-    type: ansible
-    playbook: "ansible-html-grain/playbook.yml"
+---
+- name: Generate HTML file with Grain Outputs
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Ensure output directory exists
+      file:
+        path: /home/root/tmp-storage/output
+        state: directory
+
+    - name: Create HTML file with URLs
+      copy:
+        dest: /home/root/tmp-storage/output/index.html
+        content: |
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <title>Grain Outputs</title>
+          </head>
+          <body>
+              <h1>Generated Outputs</h1>
+              <p><strong>S3 Bucket:</strong> {{ grains.terraform_s3_bucket.outputs.bucket_name }}</p>
+              <p><strong>Torque Output:</strong> {{ grains.s3_torque_quali.outputs.html_file }}</p>
+          </body>
+          </html>
