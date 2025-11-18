@@ -3,9 +3,21 @@
   hosts: localhost
   gather_facts: false
   vars_files:
-    - "{{ playbook_dir }}/inputs.json"
+    - /home/root/tmp-storage/ac4ebf9/inputs.json
 
   tasks:
     - name: Create HTML file with URLs
-      template:
-        src: index.html.j2
+      copy:
+        dest: /home/root/tmp-storage/ac4ebf9/output/index.html
+        content: |
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <title>Grain Outputs</title>
+          </head>
+          <body>
+              <h1>Generated Outputs</h1>
+              <p><strong>S3 Bucket:</strong> {{ bucket_name }}</p>
+              <p><strong>Torque Output:</strong> {{ torque_output }}</p>
+          </body>
+          </html>
