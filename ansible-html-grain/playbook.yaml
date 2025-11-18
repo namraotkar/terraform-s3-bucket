@@ -1,0 +1,12 @@
+---
+- name: Generate HTML file with Grain Outputs
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - "{{ playbook_dir }}/inputs.json"
+
+  tasks:
+    - name: Create HTML file with URLs
+      template:
+        src: index.html.j2
+        dest: "{{ playbook_dir }}/index.html"
