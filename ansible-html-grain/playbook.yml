@@ -4,6 +4,11 @@
   gather_facts: false
 
   tasks:
+    - name: Ensure output directory exists
+      file:
+        path: /home/root/tmp-storage/output
+        state: directory
+
     - name: Create HTML file with URLs
       copy:
         dest: /home/root/tmp-storage/output/index.html
@@ -16,6 +21,6 @@
           <body>
               <h1>Generated Outputs</h1>
               <p><strong>S3 Bucket:</strong> my-s3-bucket</p>
-              <p><strong>Torque Output:</strong> Nikhil Amraotkar</p>
+              <p><strong>Torque Output:</strong> Deployment successful</p>
           </body>
           </html>
