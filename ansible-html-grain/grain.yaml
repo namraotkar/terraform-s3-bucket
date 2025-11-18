@@ -4,20 +4,17 @@ description: "Generate HTML file using outputs from terraform_s3_bucket and s3_t
 inputs:
   bucket_name:
     type: string
-    description: "Name of the S3 bucket"
     valueFrom:
       grain: terraform_s3_bucket
       output: bucket_name
   torque_output:
     type: string
-    description: "Torque output URL"
     valueFrom:
       grain: s3_torque_quali
       output: output2
 outputs:
   html_file:
     type: string
-    description: "Path to the generated HTML file"
     value: "terraform-s3-bucket/finaloutput/file.html"
 steps:
   - name: Run Playbook
