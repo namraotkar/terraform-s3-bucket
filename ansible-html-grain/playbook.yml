@@ -1,38 +1,61 @@
----
-- name: Generate HTML file with Grain Outputs
-  hosts: localhost
-  gather_facts: false
+name: ansible_html_generator
+kind: grain
+description: "Generate an HTML file with S3 bucket and Torque outputs, then copy it to repo folder"
+inputs:
+  bucket_name:
+    type: string
+    description: "Name of the S3 bucket"
+  torque_output:
+    type: string
+    description: "Torque output URL or text"
+outputs:
+  html_file:
+    type: string
+    description: "Path to the generated HTML file"
+    value: "/home/root/tmp-storage/acc2899/workspace/repository/terraform-s3-bucket/finaloutput/index.html"
+steps:
+  - name: Run Playbook
+    type: ansible
+    playbook: |
+      ---
+      - name: Generate HTML file with Grain Outputs
+        hosts: localhost
+        gather_facts: no
+        vars:
+          bucket_name: "{{ bucket_name }}"
+          torque_output: "{{ torque_output }}"
+          output_dir: "/home/root/tmp-storage/output"
+          final_dir: "/home/root/tmp-storage/acc2899/workspace/repository/terraform-s3-bucket/finaloutput"
+        tasks:
+          - name: Ensure output directory exists
+            file:
+              path: "{{ output_dir }}"
+              state: directory
+              mode: '0755'
 
-  tasks:
-    - name: Ensure output directory exists
-      file:
-        path: /home/root/tmp-storage/output
-        state: directory
+          - name: Create HTML file with URLs
+            copy:
+              dest: "{{ output_dir }}/index.html"
+              content: |
+                <!DOCTYPE html>
+                <html>
+                <head>
+                  <title>Grain Outputs</title>
+                </head>
+                <body>
+                  <h1>Deployment Details</h1>
+                  <p><strong>S3 Bucket:</strong> {{ bucket_name }}</p>
+                  <p><strong>Torque Output:</strong> {{ torque_output }}{{ torque_output }}</a></p>
+                </body>
+                </html>
 
-    - name: Create HTML file with URLs
-      copy:
-        dest: /home/root/tmp-storage/output/index.html
-        content: |
-          <!DOCTYPE html>
-          <html>
-          <head>
-              <title>Grain Outputs</title>
-          </head>
-          <body>
-              <h1>Generated Outputs</h1>
-              <p><strong>S3 Bucket:</strong> my-s3-bucket</p>
-              <p><strong>Torque Output:</strong> Deployment successful</p>
-          </body>
-          </html>
+          - name: Ensure destination directory exists
+            file:
+              path: "{{ final_dir }}"
+              state: directory
+              mode: '0755'
 
-    - name: Copy file to repo folder
-      command: cp /home/root/tmp-storage/output/index.html /home/root/tmp-storage/acc2899/workspace/repository/terraform-s3-bucket/finaloutput/index.html
-
-    - name: Commit and push to GitHub
-      shell: |
-        cd /home/root/tmp-storage/acc2899/workspace/repository
-        git config --global user.email "your-email@example.com"
-        git config --global user.name "Torque Automation"
-        git add terraform-s3-bucket/finaloutput/index.html
-        git commit -m "Add generated HTML output"
-        git push origin main
+          - name: Copy file to repo folder
+            copy:
+              src: "{{ output_dir }}/index.html"
+              dest: "{{ final_dir }}/index.html"
