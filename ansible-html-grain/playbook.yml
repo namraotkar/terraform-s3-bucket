@@ -3,8 +3,6 @@
   hosts: localhost
   gather_facts: no
   vars:
-    bucket_name: "{{ bucket_name }}"
-    torque_output: "{{ torque_output }}"
     output_dir: "terraform-s3-bucket/finaloutput"
   tasks:
     - name: Ensure destination directory exists
