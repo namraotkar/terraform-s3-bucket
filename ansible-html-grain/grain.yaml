@@ -1,17 +1,6 @@
-name: ansible_html_generator
+name: static_html_generator
 kind: grain
-description: "Generate HTML file using outputs from terraform_s3_bucket and s3_torque_quali grains"
-inputs:
-  bucket_name:
-    type: string
-    valueFrom:
-      grain: terraform_s3_bucket
-      output: bucket_name
-  torque_output:
-    type: string
-    valueFrom:
-      grain: s3_torque_quali
-      output: output2
+description: "Generate HTML file with static values for S3 bucket and Torque output"
 outputs:
   html_file:
     type: string
