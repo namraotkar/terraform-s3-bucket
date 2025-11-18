@@ -20,7 +20,7 @@
           </head>
           <body>
               <h1>Generated Outputs</h1>
-              <p><strong>S3 Bucket:</strong> my-s3-bucket</p>
-              <p><strong>Torque Output:</strong> Deployment successful</p>
+              <p><strong>S3 Bucket:</strong> {{ grains.terraform_s3_bucket.outputs.bucket_name }}</p>
+              <p><strong>Torque Output:</strong> {{ grains.s3_torque_quali.outputs.html_file }}View File</a></p>
           </body>
           </html>
