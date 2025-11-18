@@ -32,7 +32,7 @@ playbook: |
             <head><title>Grain Outputs</title></head>
             <body>
               <h1>Generated Links</h1>
-              <p>S3 Bucket: https://{{ bucket_name }}.s3.amazonaws.com</p>
+              <p>S3 Bucket: <a href="{ bucket_name }}.s3.amazonaws.com{{ bucket_name }}</a></p>
               <p>Torque Output: {{ torque_output }}</p>
             </body>
             </html>
