@@ -2,8 +2,6 @@
 - name: Generate HTML file with Grain Outputs
   hosts: localhost
   gather_facts: false
-  vars_files:
-    - /home/root/tmp-storage/inputs.json
 
   tasks:
     - name: Create HTML file with URLs
@@ -17,7 +15,7 @@
           </head>
           <body>
               <h1>Generated Outputs</h1>
-              <p><strong>S3 Bucket:</strong> {{ bucket_name }}</p>
-              <p><strong>Torque Output:</strong> {{ torque_output }}</p>
+              <p><strong>S3 Bucket:</strong> my-s3-bucket</p>
+              <p><strong>Torque Output:</strong> Deployment successful</p>
           </body>
           </html>
