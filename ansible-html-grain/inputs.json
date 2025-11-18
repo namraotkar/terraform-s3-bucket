@@ -1,0 +1,4 @@
+{
+  "bucket_name": "my-sample-bucket",
+  "torque_output": "https://torque.example.com/output"
+}
