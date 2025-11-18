@@ -23,6 +23,6 @@
           <body>
             <h1>Deployment Details</h1>
             <p><strong>S3 Bucket:</strong> {{ bucket_name }}</p>
-            <p><strong>Torque Output:</strong> {{ torque_output }}{{ torque_output }}</a></p>
+            <p><strong>Torque Output:</strong> <a href="{{ torque}{{ torque_output }}</a></p>
           </body>
           </html>
