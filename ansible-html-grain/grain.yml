@@ -1,12 +1,13 @@
 name: ansible_html_generator
 kind: ansible
+depends-on: terraform_s3_bucket,s3_torque_quali
 inputs:
   bucket_name:
     type: string
     description: "Name of the S3 bucket"
-  object_url:
+  torque_output:
     type: string
-    description: "URL of the uploaded object"
+    description: "Static message from previous grain"
 outputs:
   html_file:
     type: file
@@ -17,18 +18,16 @@ playbook: |
     connection: local
     gather_facts: no
     tasks:
-      - name: Create HTML file
+      - name: Create HTML file with URLs
         copy:
           dest: "./index.html"
           content: |
             <!DOCTYPE html>
             <html>
-            <head>
-                <title>Torque Automation Report</title>
-            </head>
+            <head><title>Grain Outputs</title></head>
             <body>
-                <h1>Automation Report</h1>
-                <p>S3 Bucket: {{ bucket_name }}</p>
-                <p>Object URL: {{ object_url }}{{ object_url }}</a></p>
+              <h1>Generated Links</h1>
+              <p>S3 Bucket: https://s3.amazonaws.com/{{ bucket_name }}{{ bucket_name }}</a></p>
+              <p>Torque Output: {{ torque_output }}</p>
             </body>
             </html>
