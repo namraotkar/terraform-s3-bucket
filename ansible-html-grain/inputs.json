@@ -1,4 +1,4 @@
 {
-  "bucket_name": "my-sample-bucket",
-  "torque_output": "https://torque.example.com/output"
+  "bucket_name": "{{ grains.terraform_s3_bucket.outputs.bucket_name }}",
+  "torque_output": "{{ grains.s3_torque_quali.outputs.result }}"
 }
