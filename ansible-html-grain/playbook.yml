@@ -3,12 +3,12 @@
   hosts: localhost
   gather_facts: false
   vars_files:
-    - /home/root/tmp-storage/{{ task_id }}/inputs.json
+    - /home/root/tmp-storage/inputs.json
 
   tasks:
     - name: Create HTML file with URLs
       copy:
-        dest: /home/root/tmp-storage/{{ task_id }}/output/index.html
+        dest: /home/root/tmp-storage/output/index.html
         content: |
           <!DOCTYPE html>
           <html>
