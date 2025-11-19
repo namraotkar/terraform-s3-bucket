@@ -1,11 +1,34 @@
-name: static_html_generator
-kind: grain
-description: "Generate HTML file with static values for S3 bucket and Torque output"
+name: ansible_html_grain
+kind: ansible
+inputs: {}
 outputs:
-  html_file:
+  html_link:
     type: string
-    value: "terraform-s3-bucket/finaloutput/file.html"
-steps:
-  - name: Run Playbook
-    type: ansible
-    playbook: "ansible-html-grain/playbook.yml"
+    value: "https://github.com/namratokar/terraform-s3-bucket/blob/main/ansible_html_grain/index.html"
+playbook: |
+  - name: Generate clickable HTML and text file
+    hosts: localhost
+    tasks:
+      - name: Create final.txt
+        copy:
+          dest: "/tmp/final.txt"
+          content: |
+            Nikhil Armatokar
+            Torque Project
+
+      - name: Create index.html
+        copy:
+          dest: "/tmp/index.html"
+          content: |
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Torque Output</title>
+            </head>
+            <body>
+                <h1>Nikhil Armatokar</h1>
+                <h2>Torque Project</h2>
+                <p>Click below to view the final output:</p>
+                <a href="https://github.com/namerraform-s3-bucket/blob/main/ansible_html_grain/final.txtView Final Output</a>
+            </body>
+            </html>
