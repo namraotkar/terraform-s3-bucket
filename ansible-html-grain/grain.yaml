@@ -1,34 +1,45 @@
-name: ansible_html_grain
-kind: ansible
-inputs: {}
-outputs:
-  html_link:
-    type: string
-    value: "https://github.com/namratokar/terraform-s3-bucket/blob/main/ansible_html_grain/index.html"
-playbook: |
-  - name: Generate clickable HTML and text file
-    hosts: localhost
-    tasks:
-      - name: Create final.txt
-        copy:
-          dest: "/tmp/final.txt"
-          content: |
-            Nikhil Armatokar
-            Torque Project
 
-      - name: Create index.html
-        copy:
-          dest: "/tmp/index.html"
-          content: |
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>Torque Output</title>
-            </head>
-            <body>
-                <h1>Nikhil Armatokar</h1>
-                <h2>Torque Project</h2>
-                <p>Click below to view the final output:</p>
-                <a href="https://github.com/namerraform-s3-bucket/blob/main/ansible_html_grain/final.txtView Final Output</a>
-            </body>
-            </html>
+name: ansible_html_grain
+inputs:
+  bucket_name: string
+  torque_output: string
+outputs:
+  html_link: string
+
+steps:
+  - name: Create Playbook
+    run: |
+      mkdir -p ansible_html_grain
+      cat <<'EOF' > ansible_html_grain/playbook.yml
+      ---
+      - name: Generate HTML file with static values
+        hosts: localhost
+        tasks:
+          - name: Ensure destination directory exists
+            file:
+              path: "/terraform-s3-bucket/finaloutput"
+              state: directory
+              mode: '0755'
+
+          - name: Create HTML file with static values
+            copy:
+              dest: "/terraform-s3-bucket/finaloutput/index.html"
+              content: |
+                <!DOCTYPE html>
+                <html>
+                <head><title>Deployment Details</title></head>
+                <body>
+                  <h1>Bucket: {{ bucket_name }}</h1>
+                  <p>Torque Output: {{ torque_output }}</p>
+                </body>
+                </html>
+      EOF
+
+  - name: Run Playbook
+    run: |
+      cd ansible_html_grain
+      ansible-playbook --inventory {{ workspace }}/inventory.yaml playbook.yml --extra-vars "@{{ workspace }}/inputs.json"
+
+  - name: Set Output
+    run: |
+      echo "html_link=https://github.com/namraotkar/terraform-s3-bucket/blob/main/ansible-html-grain/index.html" >> $GRAIN_OUTPUTS_FILE
