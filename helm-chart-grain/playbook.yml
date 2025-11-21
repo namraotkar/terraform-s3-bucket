@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Create Helm values file dynamically
+      copy:
+        dest: /tmp/values.yaml
+        content: |
+          s3Bucket: {{ s3_bucket }}
+          torqueOutput: {{ torque_data }}
+
+    - name: Install Helm chart with dynamic values
+      command: >
+        helm upgrade --install {{ release_name }} {{ chart_name }}
+        --namespace {{ namespace }} -f /tmp/values.yaml
+
+    - name: Get Helm release status
+      command: helm status {{ release_name }} --namespace {{ namespace }}
+      register: helm_output
+
+    - set_fact:
+        helm_status: "{{ helm_output.stdout }}"

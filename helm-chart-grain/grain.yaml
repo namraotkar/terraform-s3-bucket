@@ -1,1 +1,21 @@
-
+name: helm_chart_grain
+description: Deploy a Helm chart using Ansible and consume outputs from other grains
+inputs:
+  chart_name:
+    type: string
+    required: true
+  release_name:
+    type: string
+    required: true
+  namespace:
+    type: string
+    default: "default"
+  s3_bucket:
+    type: string
+    required: true
+  torque_data:
+    type: string
+    required: true
+outputs:
+  helm_status:
+    type: string
