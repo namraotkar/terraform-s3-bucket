@@ -1,27 +1,11 @@
-
-name: ansible_html_grain
-inputs:
-  bucket_name: string
-  torque_output: string
+name: static_html_generator
+kind: grain
+description: "Generate HTML file with static values for S3 bucket and Torque output"
 outputs:
-  html_link: string
-
+  html_file:
+    type: string
+    value: "terraform-s3-bucket/finaloutput/file.html"
 steps:
   - name: Run Playbook
-    run: |
-      cd {{ workspace }}/ansible-html-grain
-      ansible-playbook --inventory {{ workspace }}/inventory.yaml playbook.yml --extra-vars "@{{ workspace }}/inputs.json"
-
-  - name: Commit HTML to GitHub
-    run: |
-      cd {{ workspace }}
-      git config --global user.email "torque-bot@example.com"
-      git config --global user.name "Torque Bot"
-      cp /terraform-s3-bucket/finaloutput/index.html ansible-html-grain/index.html
-      git add ansible-html-grain/index.html
-      git commit -m "Add generated HTML file"
-      git push origin main
-
-  - name: Set Output
-    run: |
-      echo "html_link=https://github.com/namraotkar/terraform-s3-bucket/blob/main/ansible-html-grain/index.html" >> $GRAIN_OUTPUTS_FILE
+    type: ansible
+    playbook: "ansible-html-grain/playbook.yml"
