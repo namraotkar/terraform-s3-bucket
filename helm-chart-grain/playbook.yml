@@ -7,17 +7,17 @@
       copy:
         dest: /tmp/values.yaml
         content: |
-          s3Bucket: "{{ grains.terraform_s3_bucket.outputs.bucket_name }}"
-          torqueOutput: "{{ grains.s3_torque_quali.outputs.torque_output }}"
+          s3Bucket: "Torque Project"
+          torqueOutput: "Nikhil Amraotkar"
 
-    - name: Install Helm chart with dynamic values
+    - name: Install Helm chart with hardcoded values
       command: >
-        helm upgrade --install {{ release_name }} {{ chart_name }}
-        --namespace {{ namespace }} -f /tmp/values.yaml
+        helm upgrade --install my-release my-chart
+        --namespace default
+        -f /tmp/values.yaml
 
     - name: Get Helm release status
-      command: >
-        helm status {{ release_name }} --namespace {{ namespace }}
+      command: helm status my-release --namespace default
       register: helm_output
 
     - set_fact:
