@@ -1,28 +1,23 @@
+
 ---
 - name: Generate HTML file with static values
   hosts: localhost
-  gather_facts: no
-  vars:
-    output_dir: "terraform-s3-bucket/finaloutput"
   tasks:
     - name: Ensure destination directory exists
       file:
-        path: "{ output_dir }"
+        path: "/terraform-s3-bucket/finaloutput"
         state: directory
         mode: '0755'
 
     - name: Create HTML file with static values
       copy:
-        dest: "{ output_dir }/file.html"
+        dest: "/terraform-s3-bucket/finaloutput/index.html"
         content: |
           <!DOCTYPE html>
           <html>
-          <head>
-            <title>Grain Outputs</title>
-          </head>
+          <head><title>Deployment Details</title></head>
           <body>
-            <h1>Deployment Details</h1>
-            <p><strong>S3 Bucket:</strong> my-sample-bucket</p>
-            <p><strong>Torque Output:</strong> <a href="https://torque.example.com/output" target="_blank">https://torque.example.com/output</a></p>
+            <h1>Bucket: {{ bucket_name }}</h1>
+            <p>Torque Output: {{ torque_output }}</p>
           </body>
           </html>
