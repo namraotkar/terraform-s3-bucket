@@ -1,5 +1,6 @@
+
 ---
-- name: Generate HTML file with static values
+- name: Generate HTML file with dynamic values
   hosts: localhost
   gather_facts: no
   vars:
@@ -7,13 +8,13 @@
   tasks:
     - name: Ensure destination directory exists
       file:
-        path: "{ output_dir }"
+        path: "{{ output_dir }}"
         state: directory
         mode: '0755'
 
-    - name: Create HTML file with static values
+    - name: Create HTML file with dynamic values
       copy:
-        dest: "{ output_dir }/file.html"
+        dest: "{{ output_dir }}/file.html"
         content: |
           <!DOCTYPE html>
           <html>
@@ -22,7 +23,7 @@
           </head>
           <body>
             <h1>Deployment Details</h1>
-            <p><strong>S3 Bucket:</strong> my-sample-bucket</p>
-            <p><strong>Torque Output:</strong> <a href="https://torque.example.com/output" target="_blank">https://torque.example.com/output</a></p>
+            <p><strong>S3 Bucket:</strong> {{ bucket_name }}</p>
+            <p><strong>Torque Output:</strong> {{ torque_output }}{{ torque_output }}</a></p>
           </body>
           </html>
